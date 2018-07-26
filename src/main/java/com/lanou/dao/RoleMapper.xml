@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanou.dao.RoleMapper">
+    <resultMap id="RoleVO" type="com.lanou.bean.RoleVO">
+        <id column="role_id" property="role_id"/>
+        <result column="r_name" property="name"/>
+        <collection property="moduleInfoList" ofType="com.lanou.bean.ModuleInfo">
+            <id column="module_id" property="module_id"/>
+            <result column="m_name" property="name"/>
+        </collection>
+    </resultMap>
+    <insert id="insertRole">
+        insert into role_info (role_id, name) VALUES (#{role_id}, #{name})
+    </insert>
+
+    <update id="updateNameById">
+        update role_info set name = #{name}
+        where role_id = #{role_id}
+    </update>
+
+    <select id="findAllRoleVO" resultMap="RoleVO">
+        SELECT r.role_id role_id, r.name r_name, m.module_id module_id, m.name m_name
+        FROM role_info r
+        LEFT JOIN role_module l ON r.role_id = l.role_id
+        LEFT JOIN module_info m ON l.module_id = m.module_id
+    </select>
+    <select id="findById" resultType="com.lanou.bean.RoleInfo">
+        SELECT * FROM role_info where role_id = #{role_id}
+    </select>
+    <select id="findByName" resultType="com.lanou.bean.RoleInfo">
+        SELECT * from role_info where name = #{name}
+    </select>
+    <select id="findRoleVOById" resultMap="RoleVO">
+        SELECT r.role_id role_id, r.name r_name, m.module_id module_id, m.name m_name
+        FROM role_info r
+        LEFT JOIN role_module l ON r.role_id = l.role_id
+        LEFT JOIN module_info m ON l.module_id = m.module_id
+        WHERE r.role_id = #{role_id}
+    </select>
+    <select id="findAllRoleInfo" resultType="com.lanou.bean.RoleInfo">
+        SELECT * FROM role_info
+    </select>
+</mapper>

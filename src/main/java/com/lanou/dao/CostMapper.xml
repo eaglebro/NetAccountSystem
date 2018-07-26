@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanou.dao.CostMapper">
+
+    <insert id="insertCost">
+        INSERT INTO cost VALUES (NULL, #{name}, #{base_duration}, #{base_cost}, #{unit_cost}, 1, #{descr}, #{creatime} , NULL , #{cost_type})
+    </insert>
+    <update id="modifyById">
+        UPDATE cost SET name = #{name}, cost_type = #{cost_type}, base_duration = #{base_duration}, base_cost = #{base_cost}, unit_cost = #{unit_cost}, descr = #{descr}
+        where cost_id = #{cost_id}
+    </update>
+    <update id="updateStatus">
+        update cost set status = #{status}
+        where cost_id = #{cost.cost_id}
+    </update>
+    <delete id="deleteById">
+        DELETE FROM cost where cost_id = #{cost_id}
+    </delete>
+    <select id="findAllCost" resultType="com.lanou.bean.Cost">
+        SELECT * FROM cost
+    </select>
+    <select id="findById" resultType="com.lanou.bean.Cost">
+        SELECT * FROM cost WHERE cost_id = #{cost_id}
+    </select>
+    <select id="findByName" resultType="com.lanou.bean.Cost">
+        SELECT * FROM cost where name = #{name}
+    </select>
+</mapper>

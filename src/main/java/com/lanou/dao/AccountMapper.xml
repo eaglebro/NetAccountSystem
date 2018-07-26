@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanou.dao.AccountMapper">
+
+    <insert id="insertAccount">
+        INSERT INTO account (account_id, recommender_id, login_name, login_passwd, status, create_date, pause_date, close_date,
+    real_name, idcard_no, birthdate, gender, occupation, telephone, email, mailaddress, zipcode, qq, last_login_time, last_login_ip)
+    VALUES (#{account_id}, #{recommender_id}, #{login_name}, #{login_passwd}, #{status}, #{create_date}, #{pause_date},
+    #{close_date}, #{real_name}, #{idcard_no}, #{birthdate}, #{gender}, #{occupation}, #{telephone}, #{email}, #{mailaddress},
+    #{zipcode},
+    #{qq},
+    #{last_login_time},
+    #{last_login_ip})
+    </insert>
+    <update id="updateStatusById">
+        update account set status = #{status}
+        where account_id = #{account_id}
+    </update>
+    <update id="updateTimesById">
+        update account set pause_date = #{pause_date}, close_date = #{close_date}
+        where account_id = #{account_id}
+    </update>
+    <select id="findAllAccount" resultType="com.lanou.bean.Account">
+        SELECT * FROM account
+    </select>
+    <select id="criteriaQuery" resultType="com.lanou.bean.Account">
+        SELECT * FROM account a
+        <where>
+            <if test="idcard_no!=null and idcard_no!=''">
+                a.idcard_no = #{idcard_no}
+            </if>
+            <if test="real_name!=null and real_name!=''">
+                and a.real_name like "%"#{real_name}"%"
+            </if>
+            <if test="login_name!=null and login_name!=''">
+                and a.login_name like "%"#{login_name}"%"
+            </if>
+            <if test="status!=null and status!=''">
+                and a.status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="findAccountByPage" resultType="com.lanou.bean.Account">
+        SELECT * FROM account a
+        <where>
+            <if test="idcard_no!=null and idcard_no!=''">
+                a.idcard_no = #{idcard_no}
+            </if>
+            <if test="real_name!=null and real_name!=''">
+                and a.real_name like "%"#{real_name}"%"
+            </if>
+            <if test="login_name!=null and login_name!=''">
+                and a.login_name like "%"#{login_name}"%"
+            </if>
+            <if test="status!=null and status!=''">
+                and a.status = #{status}
+            </if>
+        </where> order by account_id limit #{startRow}, #{pageSize}
+    </select>
+    <select id="countByPage" resultType="java.lang.Integer">
+        SELECT count(*) FROM account a
+        <where>
+            <if test="idcard_no!=null and idcard_no!=''">
+                a.idcard_no = #{idcard_no}
+            </if>
+            <if test="real_name!=null and real_name!=''">
+                and a.real_name like "%"#{real_name}"%"
+            </if>
+            <if test="login_name!=null and login_name!=''">
+                and a.login_name like "%"#{login_name}"%"
+            </if>
+            <if test="status!=null and status!=''">
+                and a.status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="findById" resultType="com.lanou.bean.Account">
+        SELECT * FROM account where account_id = #{account_id}
+    </select>
+    <select id="findByLogin_name" resultType="com.lanou.bean.Account">
+        SELECT * FROM account where login_name = #{login_name}
+    </select>
+    <select id="findByIdcard_no" resultType="com.lanou.bean.Account">
+        SELECT * FROM account where idcard_no = #{idcard_no}
+    </select>
+</mapper>
