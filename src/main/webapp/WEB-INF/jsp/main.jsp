@@ -12,7 +12,7 @@
     <ul id="menu">
         <li><a href="<%=request.getContextPath()%>/main.do" class="index_on"></a></li>
         <li><a href="<%=request.getContextPath()%>/role/main" class="role_off"></a></li>
-        <li><a href="admin/admin_list.html" class="admin_off"></a></li>
+        <li><a href="<%=request.getContextPath()%>/admin/main" class="admin_off"></a></li>
         <li><a href="<%=request.getContextPath()%>/cost/list.do" class="fee_off"></a></li>
         <li><a href="<%=request.getContextPath()%>/account/main" class="account_off"></a></li>
         <li><a href="<%=request.getContextPath()%>/service/main" class="service_off"></a></li>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lanou.dao.AdminMapper">
+
+    <resultMap id="adminListVO" type="com.lanou.bean.AdminListVO">
+        <id property="admin_id" column="admin_id"/>
+        <result property="real_name" column="real_name"/>
+        <result property="username" column="username"/>
+        <result property="telephone" column="telephone"/>
+        <result property="email" column="email"/>
+        <result property="create_time" column="create_time"/>
+        <collection property="roleInfo" ofType="com.lanou.bean.RoleInfo">
+            <id property="role_id" column="role_id"/>
+            <result property="name" column="name"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insertAdmin">
+        INSERT INTO admin VALUES (#{admin_in}, #{real_name} #{username}, #{password}, #{telephone}, #{email}, #{create_time})
+    </insert>
+    <delete id="deleteByAdminId">
+        delete from admin where admin_id = #{admin_id}
+    </delete>
+    <select id="findAllAdminListVO" resultMap="adminListVO">
+      SELECT
+        admin.admin_id    admin_id,
+        admin.real_name   real_name,
+        admin.username    username,
+        admin.telephone   telephone,
+        admin.email       email,
+        admin.create_time create_time,
+        role_info.role_id role_id,
+        role_info.name    name
+      FROM admin
+        LEFT JOIN admin_role
+          ON admin.admin_id = admin_role.admin_id
+        LEFT JOIN role_info
+          ON admin_role.role_id = role_info.role_id
+    </select>
+</mapper>
